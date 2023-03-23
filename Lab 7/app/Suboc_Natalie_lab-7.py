@@ -24,7 +24,13 @@ def get_status(id):
     result = count_word_task.AsyncResult(id)
     if not result:
         return jsonify({ "error": "task id not found"})
-    return result.status
+
+    output = dict()
+    output["status"] = result.status
+    if result.status == "SUCCESS":
+        output["result"] = result.get()
+
+    return output
     
 
 if __name__ == "__main__":
